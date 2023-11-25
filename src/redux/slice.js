@@ -13,5 +13,5 @@ const dataSlice = createSlice({
     }
 })
 
-const { addTocart, removeToCart } = dataSlice.actions;
+export const { addTocart, removeToCart } = dataSlice.actions;
 export default dataSlice.reducer

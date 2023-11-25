@@ -1,16 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import ModeNightIcon from '@mui/icons-material/ModeNight';
 import Context from '../context/Mycontext';
-
+import { useSelector } from 'react-redux'
 const navigation = [
-
- 
   { name: 'Dashboard', Link: '/', current: true },
 
 ]
@@ -23,7 +20,8 @@ function classNames(...classes) {
 const Navbar = () => {
 
     const {mode,toggle} =React.useContext(Context)
-  
+    const storeData =  useSelector((state)=>state.custom)
+    console.log(storeData)
     return (
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
@@ -75,7 +73,7 @@ const Navbar = () => {
                     >
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
+                      {/* <BellIcon className="h-6 w-6" aria-hidden="true" /> */}
                    
                     </button>
 
@@ -83,14 +81,15 @@ const Navbar = () => {
                       type="button"
                       className="relative flex ml-4 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                     >
-                     <Link to="/cart">  <ShoppingCartIcon></ShoppingCartIcon></Link>
+                     <Link to="/cart"><ShoppingCartIcon></ShoppingCartIcon><span className="  text-xl text-red-500">{storeData.length}</span></Link>
+
                    
                     </button>
 
                 
-                    <button onClick={toggle} className='ml-4'>
+                    <button onClick={toggle} className='ml-4 '>
                         {
-                            mode === "light"?<ModeNightIcon className='text-gray-400' ></ModeNightIcon> :<WbSunnyIcon className='text-gray-400'></WbSunnyIcon>
+                            mode === "light"?<ModeNightIcon className='text-gray-400 hover:text-white' ></ModeNightIcon> :<WbSunnyIcon className='text-gray-400 hover:text-white  '></WbSunnyIcon>
                         }
                     </button>
                     {/* Profile dropdown */}
@@ -105,7 +104,7 @@ const Navbar = () => {
                     <Disclosure.Button
                       key={item.name}
                       as="a"
-                      href={item.href}
+                      href={item.Link}
                       className={classNames(
                         item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'block rounded-md px-3 py-2 text-base font-medium'
